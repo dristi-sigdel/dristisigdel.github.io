@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+</head>
+
+<body>
+<div class="main">
+<img height="100" width="100" id="profileImage">
+<h2 id="fullName"></h2>
+<p id="bio"></p>
+
+<p>
+    Check me on <a id="githubLink">GitHub</a>
+</p>
+
+</div>
+
+<script>
+    fetch("https://api.github.com/users/dristi-sigdel")
+    .then(response => response.json())
+    .then(function(data) {
+         console.log(data)
+
+         document.getElementById('profileImage').src = data['avatar_url']
+         document.getElementById('fullName').textContent = data['name']
+         document.getElementById('bio').textContent = data['bio']
+         document.getElementById('githubLink').href = data['html_url']
+    })
+
+    fetch("https://api.github.com/users/dristi-sigdel/repos")
+		.then(response =>response.json())
+		.then(function(data){
+		console.log(data)
+		let m = data.length;
+		var n = parseInt(m);
+		let repoName = "";
+		for(i = 0;i < n; i++ )
+		{
+		repoName += " Repo " + i +" "+ data[i]['name'] +"<br>"+ "<br>";
+		}
+		document.getElementById('repo').innerHTML = repoName
+		})
+
+</script>
+
+</body>
+
+
+
+
+<style>
+    .main{
+        text-align: center;
+    }
+
+    img{
+       border-radius: 50%;
+       width: 100;
+       height: 100;
+    }
+    body{
+        background-color: rgb(191, 208, 240);
+        font-family: sans-serif;
+    }
+</style>
+
+
+
+</html>
